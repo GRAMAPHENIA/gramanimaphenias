@@ -1,0 +1,17 @@
+# Blender
+*.blend1
+*.blend2
+*.blend@
+__pycache__/
+*.pyc
+
+# Renders intermedios (los finales se publican en Releases, no en el repo)
+render/
+renders/
+tmp/
+cache/
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
