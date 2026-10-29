@@ -5,6 +5,9 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 
 ## [Sin publicar]
 
+### Corregido
+- `LICENSE` con texto MIT estándar para que GitHub lo reconozca.
+
 ### Pendiente
 - Subir exposición y suavizar el horizonte de la escena base.
 - Grano de película en el compositor.

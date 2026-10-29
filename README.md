@@ -26,7 +26,7 @@ para que cualquiera pueda replicarlo.
 
 ## Licencias
 
-Código: MIT (`LICENSE`). Documentación y assets: CC BY 4.0 (`LICENSE-CONTENT`).
+Código (`scripts/` y todo `.py`/`.ps1`): MIT (`LICENSE`). Documentación y assets: CC BY 4.0 (`LICENSE-CONTENT`).
 
 Ver los cambios en [`CHANGELOG.md`](CHANGELOG.md).
 
