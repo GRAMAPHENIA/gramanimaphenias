@@ -42,6 +42,7 @@ Prefijo clásico en inglés y descripción en español, en minúsculas y sin pun
 - [~] Fase 2: investigación en `docs/` (hechos `02-render-4gb.md` y `05-notas-blender-5.2.md`; faltan GP, Cycles, compositor)
 - [x] Fase 3: escena base reproducible (`scripts/setup_scene.py`)
 - [x] Fase 4: pipeline `scripts/render.ps1` + `scripts/encode.ps1`
+- [~] Fase 6: experimentos. Hecho: `001-ola-de-columnas` (Geometry Nodes). Falta Grease Pencil.
 
 Medición de referencia (experimento 000, cubo, EEVEE 64 muestras, 1080x1920, 24 frames):
 1,26 s/frame, pico de VRAM 2817 MiB (toda la GPU, incluye otros programas; ver `docs/02-render-4gb.md`) (RTX 3050 Ti 4 GB), mp4 H.264 1080x1920 24 fps.
@@ -50,5 +51,5 @@ Compositor base (Blender 5.2: grupo en `scene.compositing_node_group`): glare Bl
 El grano no está: no hay nodo de ruido directo en el compositor; queda por resolver.
 Encuadre ajustado: el cubo entra completo en el salto (cámara en (0,-13,3.2)).
 
-Próximo paso: definir con el autor la estética del experimento 001 y resolver el grano
-de película en el compositor. Después, documentar Grease Pencil y Geometry Nodes en `docs/`.
+Próximo paso: el autor revisa el experimento 001 y define la estética; después, un experimento
+de Grease Pencil con dibujo del autor, y resolver el grano de película en el compositor.

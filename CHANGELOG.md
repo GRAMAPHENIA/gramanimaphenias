@@ -9,6 +9,7 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `LICENSE` con texto MIT estándar para que GitHub lo reconozca.
 
 ### Agregado
+- Experimento `001-ola-de-columnas`: ola procedural con Geometry Nodes, bucle de 4 s, receta, script y preview.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
@@ -18,7 +19,8 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 
 ### Pendiente
 - Grano de película en el compositor.
-- Primer experimento con estética definida por el autor.
+- Definir la estética final del experimento 001 con el autor.
+- Experimento de Grease Pencil (dibujo del autor).
 
 ## [0.1.0] - 2026-10-29
 

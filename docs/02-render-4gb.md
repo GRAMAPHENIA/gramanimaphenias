@@ -28,10 +28,12 @@ Experimento 000 (cubo animado sobre suelo, 2 luces de área), 24 fotogramas:
 | --- | --- | --- | --- |
 | 2026-10-29 | luz baja, mundo claro | 1,20 | 1390 MiB |
 | 2026-10-29 | luz y suelo definitivos (v0.1) | 1,26 | 2817 MiB |
+| 2026-10-29 | experimento 001: 319 columnas instanciadas, 96 frames | 1,45 | 2853 MiB |
 
 - La GPU en reposo usa unos 1468 MiB (Windows y otros programas). El pico de `nvidia-smi` es de toda
   la GPU, no solo de Blender, y varía según lo que haya abierto: la diferencia entre las dos filas
   no se debe solo a la escena. Para medir Blender solo, cerrar el resto de programas.
+- 319 instancias con Geometry Nodes no cambian de forma apreciable la VRAM: el pico es casi igual al del cubo.
 - Todas las mediciones son de una sola corrida; repetir antes de sacar conclusiones.
 
 ## Cómo medir
