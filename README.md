@@ -51,5 +51,12 @@ Compositor base (Blender 5.2: grupo en `scene.compositing_node_group`): glare Bl
 Encuadre ajustado: el cubo entra completo en el salto (cámara en (0,-13,3.2)).
 
 Experimento 002: el autor eligió la cámara D y el sonido v4 (campanas y oleaje); preview en `media/002-columnas-camara-d.mp4`.
-Próximo paso: estética final (paleta y ritmo) del 002 si el autor quiere cambiarla; después, un experimento
-de Grease Pencil con dibujo del autor.
+
+### Para la próxima sesión
+1. **Pendiente del autor:** guardar el `002.blend` con Ctrl+S. El pase final de orden del grafo se hizo por script y Blender no
+   marca el archivo como modificado; el `.blend` del repo (commit `92ef782`) es anterior a ese orden. Después, hacer su commit.
+2. El `.blend` conserva la cámara diagonal anterior y las propuestas F y G (colección "Propuestas de cámara"); preguntar si se quitan.
+3. Estética final del 002 (paleta y ritmo): sigue siendo propuesta provisional; solo cambiarla si el autor lo pide.
+4. Experimento de Grease Pencil: necesita un dibujo del autor (no inventar identidad ni estética).
+5. Completar la Fase 2: documentar Grease Pencil, Cycles y compositor en `docs/` (verificar en las notas oficiales de 5.2).
+6. Cuidado al repetir renders seguidos: la laptop se calienta y el tiempo por fotograma se triplica (ver `docs/02-render-4gb.md`).
