@@ -1,4 +1,6 @@
-# Gramaphenia Blender Lab
+# gramanimaphenias
+
+**Gramaphenia Blender Lab**
 
 Laboratorio de animaciones sencillas y de bajo costo en Blender: 3D, Grease Pencil
 y Geometry Nodes, pensado para renderizarse en una laptop modesta y documentarse
@@ -25,6 +27,8 @@ para que cualquiera pueda replicarlo.
 ## Licencias
 
 Código: MIT (`LICENSE`). Documentación y assets: CC BY 4.0 (`LICENSE-CONTENT`).
+
+Ver los cambios en [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Estado
 
