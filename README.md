@@ -30,6 +30,12 @@ Código (`scripts/` y todo `.py`/`.ps1`): MIT (`LICENSE`). Documentación y asse
 
 Ver los cambios en [`CHANGELOG.md`](CHANGELOG.md).
 
+## Commits
+
+Prefijo clásico en inglés y descripción en español, en minúsculas y sin punto final:
+`feat:` (algo nuevo), `fix:` (corrección), `docs:` (documentación), `refactor:`,
+`chore:` (mantenimiento), `perf:`, `test:`. Ejemplo: `feat: agregar compositor con glare y viñeta`.
+
 ## Estado
 
 - [x] Fase 1: repositorio, licencias, LFS, estructura
