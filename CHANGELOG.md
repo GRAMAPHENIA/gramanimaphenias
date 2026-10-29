@@ -9,6 +9,7 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `LICENSE` con texto MIT estándar para que GitHub lo reconozca.
 
 ### Agregado
+- Experimento `002-columnas-cenital`: vista cenital con destello al llegar al pico y apagado al caer, bucle de 6 s.
 - Grano de película en el compositor base (ruido blanco 4D, modo Linear Light, factor 0,03).
 - Experimento `001-ola-de-columnas`: ola procedural con Geometry Nodes, bucle de 4 s, receta, script y preview.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.

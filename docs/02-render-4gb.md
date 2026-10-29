@@ -39,6 +39,7 @@ Experimento 000 (cubo animado sobre suelo, 2 luces de área), 24 fotogramas:
   por calor activo (`clocks_event_reasons = 0x20`) y el tiempo por fotograma se triplicó (1,45 a 4,15 s)
   sin cambiar la escena. Para comparar tiempos hay que partir con la máquina fría, o dejarla enfriar
   entre corridas. Se puede mirar con `nvidia-smi --query-gpu=temperature.gpu,clocks_throttle_reasons.active --format=csv`.
+- Experimento 002 (608 columnas, cenital, sol sin sombras): 2,04 s/frame, pico 1596 MiB, GPU a ~77 °C al empezar.
 - El grano del compositor no agrega tiempo medible (2,67 s contra 2,78 s en el mismo fotograma).
 - Todas las mediciones son de una sola corrida; repetir antes de sacar conclusiones.
 
