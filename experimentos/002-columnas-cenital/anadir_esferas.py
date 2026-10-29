@@ -24,7 +24,7 @@ LIFE = 0.55      # fracción del ciclo que vive la esfera (menor que 1)
 RISE = 2.5       # metros que sube desde la punta de la columna
 DIAM = 0.26      # diámetro de la esfera (m); la columna mide 0.34
 NACE = 0.10      # tramo inicial de su vida en que crece desde 0
-APAGA = 0.75     # desde esta fracción de su vida se encoge hasta desaparecer
+APAGA = 0.15     # desde esta fracción de su vida empieza a achicarse, de forma continua, hasta desaparecer
 
 
 def agregar_esferas(g):
