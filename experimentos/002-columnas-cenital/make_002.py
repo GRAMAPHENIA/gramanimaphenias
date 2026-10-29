@@ -52,11 +52,12 @@ scene.collection.objects.link(sol)
 bg = next(n for n in scene.world.node_tree.nodes if n.type == "BACKGROUND")
 bg.inputs["Color"].default_value = (0, 0, 0, 1)
 
-# --- Cámara: la pose diagonal que eligió el autor (antes era cenital, en (0, 0.5, 14) mirando a -Z) ---
+# --- Cámara: la "D" que eligió el autor (acimut 113°, elevación 46°, llena el 60 % del alto del cuadro vertical).
+# Antes: cenital en (0, 0.5, 14); luego diagonal en (-27.69, 20.61, 24.58), que llenaba solo el 44 % del alto. ---
 cam = scene.camera
 cam.data.lens = 35
-cam.location = (-27.68769, 20.61421, 24.57998)
-cam.rotation_euler = (0.9718, 0.0, -2.206097)
+cam.location = (-9.45378, 23.21843, 27.98142)
+cam.rotation_euler = (0.766954, 0.0, -2.734384)
 
 # --- Compositor: sin resplandor ni grano en este experimento ---
 tree_c = scene.compositing_node_group

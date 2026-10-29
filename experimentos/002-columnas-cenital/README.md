@@ -8,9 +8,10 @@ Bucle perfecto de 100 fotogramas (4,17 s a 24 fps), vertical 1080x1920, EEVEE.
 > Paleta (azul acero y ámbar), cámara y ritmo **provisionales**: son una propuesta técnica, no una
 > identidad visual. El autor decide la estética definitiva.
 
-Preview de la versión actual, con el sonido de caja de música y el bucle repetido 3 veces (12,5 s):
-[`media/002-columnas-esferas.mp4`](../../media/002-columnas-esferas.mp4).
-`media/002-columnas-cenital.mp4` es de una versión anterior (cámara cenital, sin esferas) y se conserva.
+Preview de la versión actual (cámara D, esferas campana, sonido v4), con el bucle repetido 3 veces (12,5 s):
+[`media/002-columnas-camara-d.mp4`](../../media/002-columnas-camara-d.mp4).
+Se conservan los anteriores: `media/002-columnas-esferas.mp4` (cámara diagonal anterior, sin campanas, sonido v2b) y
+`media/002-columnas-cenital.mp4` (cámara cenital, sin esferas).
 
 ## Evolución
 1. Vista cenital con destello al llegar al pico (sin fondo visible, sin grano ni resplandor).
@@ -106,7 +107,8 @@ material, no en los nodos de geometría.
   suelo, desactivar "Local Space" en el nodo "Apoyar sobre el suelo" (cambia bastante el aspecto).
 
 ## Ajustes propios
-- Cámara a (-27,69; 20,61; 24,58) con rotación (55,7°, 0°, -126,4°), focal 35 mm. Con sensor vertical es de 24 mm de alto.
+- Cámara **D**, elegida por el autor: (-9,45; 23,22; 27,98) con rotación (43,9°, 0°, -156,7°), focal 35 mm. Con sensor vertical
+  es de 24 mm de alto. El `.blend` conserva además la cámara diagonal anterior y las propuestas F y G (colección "Propuestas de cámara").
 - Sol sin sombras (las sombras entre columnas dejaban manchas claras que cambiaban entre fotogramas).
 - Sin resplandor ni grano en el compositor, sin suelo y con mundo negro.
 
@@ -226,7 +228,7 @@ escena entera, esferas incluidas, dentro de un margen del 5 %:
 
 | Opción | Acimut / elevación | Distancia | Llena (ancho x alto) |
 | --- | --- | --- | --- |
-| Actual | 143° / 32° | 40,7 m | 95 % x 44 % |
+| Anterior (la del autor antes de elegir) | 143° / 32° | 40,7 m | 95 % x 44 % |
 | D (gira 30°, sube 14°) | 113° / 46° | 35,4 m | 90 % x 60 % |
 | F (semi-cenital) | 100° / 70° | 29,5 m | 90 % x 74 % |
 | G (casi cenital) | 90° / 80° | 24,8 m | 90 % x 82 % |
@@ -238,7 +240,18 @@ Versión actual (608 columnas + 608 esferas, 100 fotogramas, 1080x1920, EEVEE, 6
 | --- | --- | --- | --- |
 | i5-10500H, RTX 3050 Ti 4 GB, GPU a 62 °C al empezar | 100 | 0,68 (67,5 s en total) | 2691 MiB |
 
-Una sola corrida. El pico incluye otros programas abiertos (Blender con el archivo, el navegador...). Es 3 veces más
+Con la cámara D elegida (esferas campana, sonido v4 mezclado en el mp4):
+
+| Equipo | Fotogramas | s/frame | Pico de VRAM (toda la GPU) |
+| --- | --- | --- | --- |
+| i5-10500H, RTX 3050 Ti 4 GB, GPU a 68 °C al empezar | 100 | 0,75 (75,2 s en total) | 2925 MiB |
+
+Medido en los 100 fotogramas: diferencia de luminancia entre consecutivos 2,58 a 3,22 (segundo orden máximo 0,09) y cierre
+del bucle 100 → 1 de 2,98, dentro de ese rango. En el fotograma 50 el contenido ocupa el 89 % del ancho y el 56 % del alto
+(la estimación del 60 % de la tabla de cámaras era el peor caso de los 100 fotogramas, con margen). mp4: 1080x1920, 100
+fotogramas, audio de la misma duración (4,1667 s; x3: 12,5 s).
+
+Medición anterior (cámara diagonal, sin campanas). Una sola corrida. El pico incluye otros programas abiertos (Blender con el archivo, el navegador...). Es 3 veces más
 rápido que el 001 con grano y sombras (1,45 a 4,15 s): aquí no hay grano ni resplandor y el sol no proyecta sombras.
 La versión cenital anterior (sin esferas, 144 fotogramas) tardó 2,04 s/fotograma.
 

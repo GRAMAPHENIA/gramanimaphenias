@@ -21,6 +21,11 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
+### Agregado (render con la cámara D)
+- `media/002-columnas-camara-d.mp4`: render con la cámara D elegida por el autor, esferas campana y sonido v4, bucle x3 (12,5 s).
+  0,75 s/fotograma, pico de VRAM 2925 MiB; el contenido ocupa el 89 % del ancho y el 56 % del alto del cuadro.
+- `make_002.py` usa la cámara D; la receta completa se verificó: reproduce el `.blend` guardado (cámara idéntica, geometría con diferencia 0,0).
+
 ### Agregado (campanas y sonido v4)
 - `experimentos/002-columnas-cenital/campanas.py`: esferas campana (una de cada N columnas, más grandes y brillantes), las
   únicas que suenan. 3 parámetros nuevos en el modificador (separación, tamaño y brillo). Con tamaño 1 y brillo 1 el
