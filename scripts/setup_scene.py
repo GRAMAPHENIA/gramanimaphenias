@@ -101,13 +101,26 @@ def build_compositor():
     mix.data_type = "RGBA"
     mix.blend_type = "MULTIPLY"
     mix.inputs["Factor"].default_value = 0.35
+    # Grano de película: ruido blanco 4D (la 4ª dimensión es el fotograma, así cambia en cada cuadro)
+    coords = n.new("CompositorNodeImageCoordinates")
+    t_scene = n.new("CompositorNodeSceneTime")
+    noise = n.new("ShaderNodeTexWhiteNoise")
+    noise.noise_dimensions = "4D"
+    grain = n.new("ShaderNodeMix")
+    grain.data_type = "RGBA"
+    grain.blend_type = "LINEAR_LIGHT"  # A + factor*(2B-1): ruido centrado en 0, no cambia el brillo medio
+    grain.inputs["Factor"].default_value = 0.03
     out_node = n.new("NodeGroupOutput")
     l = tree.links.new
     l(rl.outputs["Image"], glare.inputs["Image"])
     l(mask.outputs[0], blur.inputs["Image"])
     l(glare.outputs[0], mix.inputs["A"])
     l(blur.outputs[0], mix.inputs["B"])
-    l(mix.outputs["Result"], out_node.inputs["Image"])
+    l(coords.outputs["Pixel"], noise.inputs["Vector"])
+    l(t_scene.outputs["Frame"], noise.inputs["W"])
+    l(mix.outputs["Result"], grain.inputs["A"])
+    l(noise.outputs["Color"], grain.inputs["B"])
+    l(grain.outputs["Result"], out_node.inputs["Image"])
     scene.compositing_node_group = tree
 
 try:

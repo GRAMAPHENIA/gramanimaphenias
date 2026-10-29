@@ -9,6 +9,7 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `LICENSE` con texto MIT estándar para que GitHub lo reconozca.
 
 ### Agregado
+- Grano de película en el compositor base (ruido blanco 4D, modo Linear Light, factor 0,03).
 - Experimento `001-ola-de-columnas`: ola procedural con Geometry Nodes, bucle de 4 s, receta, script y preview.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
@@ -17,8 +18,10 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - Escena base: luces más fuertes, suelo de 200 m, mundo más oscuro y viñeta más suave
   para que el horizonte no sea un borde duro.
 
+### Corregido
+- `make_001.py` fija luces y mundo en valores absolutos: la receta reproduce el `.blend` publicado.
+
 ### Pendiente
-- Grano de película en el compositor.
 - Definir la estética final del experimento 001 con el autor.
 - Experimento de Grease Pencil (dibujo del autor).
 

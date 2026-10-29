@@ -137,8 +137,11 @@ cam = scene.camera
 cam.data.lens = 24  # más abierta: con ajuste vertical el sensor es de 24 mm de alto
 cam.location = (0, -10, 9)
 cam.rotation_euler = (Vector((0, 1.5, 0.8)) - cam.location).to_track_quat("-Z", "Y").to_euler()
-for nombre in ("Luz_principal", "Luz_contra"):
-    scene.objects[nombre].data.energy *= 3
+# Valores absolutos (no relativos a la base) para que la receta dé siempre la misma imagen
+scene.objects["Luz_principal"].data.energy = 450
+scene.objects["Luz_contra"].data.energy = 240
+bg = next(n for n in scene.world.node_tree.nodes if n.type == "BACKGROUND")
+bg.inputs["Color"].default_value = (0.04, 0.04, 0.05, 1)
 
 # Objeto portador del modificador
 bpy.ops.mesh.primitive_plane_add(size=1, location=(0, 0, 0))

@@ -28,12 +28,18 @@ Experimento 000 (cubo animado sobre suelo, 2 luces de área), 24 fotogramas:
 | --- | --- | --- | --- |
 | 2026-10-29 | luz baja, mundo claro | 1,20 | 1390 MiB |
 | 2026-10-29 | luz y suelo definitivos (v0.1) | 1,26 | 2817 MiB |
-| 2026-10-29 | experimento 001: 319 columnas instanciadas, 96 frames | 1,45 | 2853 MiB |
+| 2026-10-29 | experimento 001: 319 columnas instanciadas, 96 frames, máquina fría | 1,45 | 2853 MiB |
+| 2026-10-29 | experimento 001 con grano, tras varios renders seguidos | 4,15 | 1676 MiB |
 
 - La GPU en reposo usa unos 1468 MiB (Windows y otros programas). El pico de `nvidia-smi` es de toda
   la GPU, no solo de Blender, y varía según lo que haya abierto: la diferencia entre las dos filas
   no se debe solo a la escena. Para medir Blender solo, cerrar el resto de programas.
 - 319 instancias con Geometry Nodes no cambian de forma apreciable la VRAM: el pico es casi igual al del cubo.
+- **Límite térmico:** tras varios renders seguidos la GPU llegó a 88 °C con el aviso de reducción
+  por calor activo (`clocks_event_reasons = 0x20`) y el tiempo por fotograma se triplicó (1,45 a 4,15 s)
+  sin cambiar la escena. Para comparar tiempos hay que partir con la máquina fría, o dejarla enfriar
+  entre corridas. Se puede mirar con `nvidia-smi --query-gpu=temperature.gpu,clocks_throttle_reasons.active --format=csv`.
+- El grano del compositor no agrega tiempo medible (2,67 s contra 2,78 s en el mismo fotograma).
 - Todas las mediciones son de una sola corrida; repetir antes de sacar conclusiones.
 
 ## Cómo medir
