@@ -8,10 +8,16 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 ### Corregido
 - `LICENSE` con texto MIT estándar para que GitHub lo reconozca.
 
+### Agregado
+- `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
+- Convención de commits documentada en el README.
+
+### Cambiado
+- Escena base: luces más fuertes, suelo de 200 m, mundo más oscuro y viñeta más suave
+  para que el horizonte no sea un borde duro.
+
 ### Pendiente
-- Subir exposición y suavizar el horizonte de la escena base.
 - Grano de película en el compositor.
-- `docs/02-render-4gb.md` con las mediciones.
 - Primer experimento con estética definida por el autor.
 
 ## [0.1.0] - 2026-10-29

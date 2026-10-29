@@ -42,7 +42,7 @@ world = bpy.data.worlds.new("Mundo")
 if world.node_tree is None:  # use_nodes quedará obsoleto en Blender 6.0
     world.use_nodes = True
 bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
-bg.inputs["Color"].default_value = (0.04, 0.04, 0.05, 1)
+bg.inputs["Color"].default_value = (0.012, 0.012, 0.016, 1)
 bg.inputs["Strength"].default_value = 1.0
 scene.world = world
 
@@ -67,11 +67,11 @@ def add_light(name, kind, loc, energy, color=(1, 1, 1)):
     scene.collection.objects.link(o)
     return o
 
-add_light("Luz_principal", "AREA", (3, -4, 5), 150).data.size = 3
-add_light("Luz_contra", "AREA", (-3, 3, 4), 80).data.size = 2
+add_light("Luz_principal", "AREA", (3, -4, 5), 600).data.size = 3
+add_light("Luz_contra", "AREA", (-3, 3, 4), 300).data.size = 2
 
 # Suelo neutro
-bpy.ops.mesh.primitive_plane_add(size=20, location=(0, 0, 0))
+bpy.ops.mesh.primitive_plane_add(size=200, location=(0, 0, 0))
 suelo = bpy.context.active_object
 suelo.name = "Suelo"
 mat = bpy.data.materials.new("Suelo_mat")
@@ -100,7 +100,7 @@ def build_compositor():
     mix = n.new("ShaderNodeMix")
     mix.data_type = "RGBA"
     mix.blend_type = "MULTIPLY"
-    mix.inputs["Factor"].default_value = 0.6
+    mix.inputs["Factor"].default_value = 0.35
     out_node = n.new("NodeGroupOutput")
     l = tree.links.new
     l(rl.outputs["Image"], glare.inputs["Image"])
