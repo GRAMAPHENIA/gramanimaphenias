@@ -31,7 +31,8 @@ EMISION = 1.7              # intensidad del destello
 COLOR_BAJO, COLOR_ALTO = (0.015, 0.02, 0.04, 1), (0.08, 0.11, 0.18, 1)   # PROVISIONAL
 COLOR_DESTELLO = (1.0, 0.38, 0.10, 1)                                      # PROVISIONAL
 
-scene.frame_start, scene.frame_end = 1, int(T_BUCLE * scene.render.fps)
+# 100 fotogramas = un ciclo de la onda (parámetro "Frames por ciclo" de exponer_parametros.py, también 100)
+scene.frame_start, scene.frame_end = 1, 100
 K = 2 * math.pi / LONG_ONDA
 W = 2 * math.pi / T_ONDA
 
@@ -51,11 +52,11 @@ scene.collection.objects.link(sol)
 bg = next(n for n in scene.world.node_tree.nodes if n.type == "BACKGROUND")
 bg.inputs["Color"].default_value = (0, 0, 0, 1)
 
-# --- Cámara cenital ---
+# --- Cámara: la pose diagonal que eligió el autor (antes era cenital, en (0, 0.5, 14) mirando a -Z) ---
 cam = scene.camera
 cam.data.lens = 35
-cam.location = (0, 0.5, 14)
-cam.rotation_euler = (0, 0, 0)       # mira hacia -Z, con +Y hacia arriba del cuadro
+cam.location = (-27.68769, 20.61421, 24.57998)
+cam.rotation_euler = (0.9718, 0.0, -2.206097)
 
 # --- Compositor: sin resplandor ni grano en este experimento ---
 tree_c = scene.compositing_node_group

@@ -31,9 +31,24 @@ def tam(n):
 
 
 # --- Reunir los nodos antes de borrar los marcos viejos ---
-esfera = {n.label: n for n in N if n.parent and n.parent.name == "Marco 9"}
+esfera = {n.label: n for n in N if n.parent and n.parent.name.startswith("Marco 9") and n.type != "FRAME"}
 union = next((n for n in N if n.type == "JOIN_GEOMETRY"), None)
-entrada = N["Group Input"]
+# Nodos de entrada del grupo: los que alimentan a un solo marco van dentro de ese marco (como primera columna);
+# los que alimentan a varios (o a ninguno) van juntos en un marco 0. Se decide ANTES de borrar los marcos.
+entradas = [n for n in N if n.type == "GROUP_INPUT"]
+
+
+def _marco_unico(ent):
+    padres = {l.to_node.parent.name if l.to_node.parent else None for s in ent.outputs for l in s.links}
+    return padres.pop() if len(padres) == 1 else None
+
+
+locales = {}
+for ent in entradas:
+    p = _marco_unico(ent)
+    if p:
+        locales.setdefault(p, []).append(ent)
+globales = [e for e in entradas if _marco_unico(e) is None]
 for f in [n for n in N if n.type == "FRAME"]:
     N.remove(f)
 
@@ -53,6 +68,8 @@ def marco(nombre, titulo, padre=None):
 def bloque(f, columnas, x, y):
     """Coloca 'columnas' (lista de listas de nodos) dentro del marco f con su esquina superior izquierda en (x, y).
     Devuelve (ancho, alto) del marco resultante."""
+    if locales.get(f.name):
+        columnas = [locales[f.name]] + columnas       # la entrada de parámetros, a la izquierda del marco
     cx = x + PAD_X
     alto = 0
     for col in columnas:
@@ -67,14 +84,19 @@ def bloque(f, columnas, x, y):
     return (cx - GAP_X - x + PAD_X, alto + PAD_ARRIBA + PAD_ABAJO)
 
 
-M = lambda *nombres: [N[n] for n in nombres]
+M = lambda *nombres: [N[n] for n in nombres if n in N]      # ignora los que aún no existen
 
 # --- Fila superior: el flujo de la señal, de izquierda a derecha ---
 x = 0
+if globales:                      # entradas que alimentan a varios marcos o a ninguno
+    for e in globales:
+        e.label = "Parámetros" if any(s.is_linked for s in e.outputs) else "Entrada (sin uso)"
+    f0 = marco("Marco 0", "0 · Parámetros del modificador")
+    w0, h0 = bloque(f0, [globales], x, 0)
+    x += w0 + GAP_MARCOS
+
 f1 = marco("Marco 1", "1 · Coordenadas")
 w1, h1 = bloque(f1, [M("Position"), M("Separate XYZ")], x, 0)
-entrada.label = "Entrada (sin uso)"
-entrada.location_absolute = (x, -(h1 + GAP_MARCOS))
 x += w1 + GAP_MARCOS
 
 f2 = marco("Marco 2", "2 · Distancia al centro")
@@ -86,13 +108,13 @@ alto_filaA = h2 + GAP_MARCOS + h3
 x += max(w2, w3) + GAP_MARCOS
 
 f4 = marco("Marco 4", "4 · Fase de la onda")
-w4, h4 = bloque(f4, [M("Scene Time"), M("Math.012", "Math.013"), M("Math.014"), M("Math.015")], x, 0)
+w4, h4 = bloque(f4, [M("Scene Time", "P_omega", "P_K"), M("Math.012", "Math.013"), M("Math.014"), M("Math.015")], x, 0)
 x += w4 + GAP_MARCOS
 
 f5 = marco("Marco 5", "5 · Altura de la columna")
 w5, h5 = bloque(f5, [M("Math.016"), M("Math.017"), M("Math.018"), M("Math.019")], x, 0)
 f6 = marco("Marco 6", "6 · Destello: se enciende en el pico y se apaga al caer")
-w6, h6 = bloque(f6, [M("Math.020"), M("Math.021"), M("Math.022"), M("Math.023", "Map Range"),
+w6, h6 = bloque(f6, [M("Math.020"), M("Math.021"), M("Math.022", "P_decay"), M("Math.023", "Map Range"),
                      M("Math.024"), M("Math.025")], x, -(h5 + GAP_MARCOS))
 x_f9 = x                                  # la esfera se ubica debajo, desde aquí
 x += max(w5, w6) + GAP_MARCOS
@@ -112,7 +134,7 @@ w8, h8 = bloque(f8, cols8, x, 0)
 
 # --- Esfera: marco 9 con 5 submarcos en dos filas, debajo de la fila superior ---
 if esfera:
-    E = lambda *etiquetas: [esfera[e] for e in etiquetas]
+    E = lambda *etiquetas: [esfera[e] if e in esfera else N[e] for e in etiquetas if e in esfera or e in N]
     y9 = -(max(alto_filaA, h5 + GAP_MARCOS + h6, h7) + 2 * GAP_MARCOS)
     f9 = marco("Marco 9", "9 · Esferas: se desprenden en el pico y suben apagándose")
     # fila 1
@@ -122,7 +144,7 @@ if esfera:
     wa, ha = bloque(a, [E("Edad (0 = nace en el pico, 1 = muere)"), E("1 − edad"),
                         E("(1 − edad)²  = destello")], xs, ys)
     b = marco("Marco 9b", "Ascenso", f9)
-    wb, hb = bloque(b, [E("Avance (frena al subir)"), E("× Altura de ascenso"),
+    wb, hb = bloque(b, [E("Avance (frena al subir)"), E("× Altura de ascenso"), E("P_radio", "P_z0"),
                         E("+ punta de la columna"), E("Posición (0, 0, z)")], xs + wa + GAP_MARCOS, ys)
     d = marco("Marco 9d", "Color", f9)
     wd, hd = bloque(d, [E("(1 − edad) × Amplitud"), E("+ Altura mínima = color")],
