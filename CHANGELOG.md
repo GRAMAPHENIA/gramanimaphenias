@@ -21,6 +21,11 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
+### Agregado (sonido v3 y encuadre)
+- `sonido/sintetizar_002_olas.py` (+ `extraer_olas.py`, `verificar_olas.py`): esferas = caja de música, torres = oleaje
+  seguido de la altura real de los anillos. Propuesta provisional, pendiente de escucha.
+- Análisis de encuadre: con la cámara actual el límite es el ancho (95 % x 44 %); cámaras de propuesta D, F y G.
+
 ### Agregado (render del 002)
 - `media/002-columnas-esferas.mp4`: render de la versión actual con el sonido elegido, bucle x3 (12,5 s).
   0,68 s/fotograma, pico de VRAM 2691 MiB, bucle cerrado (cierre 2,08 dentro del rango consecutivo 1,86 a 2,38).

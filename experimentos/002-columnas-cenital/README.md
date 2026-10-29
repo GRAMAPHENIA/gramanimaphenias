@@ -157,6 +157,42 @@ Mezcla con el video: `scripts/encode.ps1` acepta `-Audio` y `-Repetir` (probado 
 ```
 Pendiente: renderizar la versión actual y oírla junto a la imagen.
 
+### v3: las esferas son la caja de música, las torres son el oleaje (propuesta, sin escuchar)
+Crítica del autor sobre la v2: *"la música no se nota que acompañe el movimiento de olas"*. Causa: todo sonaba en los
+picos, pero la ola de las torres es continua y nada en el sonido la seguía. La v3 separa el trabajo por elemento:
+
+| Elemento | Sonido | De dónde sale |
+| --- | --- | --- |
+| Esferas | Caja de música, pentatónica menor (la elegida) | Instante del lanzamiento de cada esfera |
+| Torres | Oleaje: 3 capas de ruido (120-500 Hz centrado, 500-1800 Hz, 1800-6000 Hz ancho en estéreo) | Altura media REAL de cada anillo concéntrico, por fotograma |
+
+La altura media global es casi plana (2,9 % de variación), pero los anillos varían mucho (20 % el interior, 13 % el medio,
+28 % el exterior) y a destiempo, porque la cresta va del centro hacia afuera: eso es lo que se oye como ola. Los anillos no
+dependen de la cámara. Archivos: `extraer_olas.py` → `olas_002.json`, `sintetizar_002_olas.py` →
+`sonido_002_v3_olas-y-caja-menor.wav` (y `_solo-olas.wav`, la capa de oleaje sola), `verificar_olas.py`.
+
+**Comprobado:** cada capa de oleaje sola correlaciona 0,97 a 0,99 con la altura de su anillo (control con la señal
+desplazada un cuarto de vuelta: ~0). En la mezcla la correlación baja (0,84 / 0,28 / 0,40) porque los ataques de las notas
+dominan la medición por fotograma en las bandas media y exterior. **Mezcla:** con la primera mezcla el oleaje medio y
+exterior quedaba ~20 dB por debajo de las notas (inaudible); se subió el oleaje y se bajaron las notas para dejarlo ~7 dB
+por debajo. `NOTAS_FACTOR` y las ganancias de `CAPAS` son los mandos. **No comprobado:** cómo suena.
+La primera verificación dio "NO" por mi culpa: comparaba con "el anillo de al lado", pero los anillos oscilan desfasados
+entre sí y están muy correlacionados; el control correcto es la señal de su propio anillo desplazada.
+
+### Encuadre de la cámara
+Con la cámara del autor (diagonal, 35 mm) la escena ocupa el 95 % del ancho y solo el 44 % del alto del cuadro vertical:
+**el límite es el ancho, no la distancia**, así que acercar la cámara corta los lados. La grilla mide 7,2 x 12,4 m y desde
+ese ángulo el lado largo se proyecta a lo ancho. Para llenar el cuadro hay que girar la cámara hacia el eje largo y/o
+subirla. Cámaras de propuesta (colección "Propuestas de cámara" en el `.blend` del autor, la activa no se cambió), con la
+escena entera, esferas incluidas, dentro de un margen del 5 %:
+
+| Opción | Acimut / elevación | Distancia | Llena (ancho x alto) |
+| --- | --- | --- | --- |
+| Actual | 143° / 32° | 40,7 m | 95 % x 44 % |
+| D (gira 30°, sube 14°) | 113° / 46° | 35,4 m | 90 % x 60 % |
+| F (semi-cenital) | 100° / 70° | 29,5 m | 90 % x 74 % |
+| G (casi cenital) | 90° / 80° | 24,8 m | 90 % x 82 % |
+
 ## Medición
 Versión actual (608 columnas + 608 esferas, 100 fotogramas, 1080x1920, EEVEE, 64 muestras):
 
