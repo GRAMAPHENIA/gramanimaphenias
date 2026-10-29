@@ -40,6 +40,7 @@ Experimento 000 (cubo animado sobre suelo, 2 luces de área), 24 fotogramas:
   sin cambiar la escena. Para comparar tiempos hay que partir con la máquina fría, o dejarla enfriar
   entre corridas. Se puede mirar con `nvidia-smi --query-gpu=temperature.gpu,clocks_throttle_reasons.active --format=csv`.
 - Experimento 002 (608 columnas, cenital, sol sin sombras): 2,04 s/frame, pico 1596 MiB, GPU a ~77 °C al empezar.
+- Experimento 002 actual (608 columnas + 608 esferas, cámara diagonal, 100 frames): 0,68 s/frame, pico 2691 MiB, GPU a 62 °C al empezar.
 - El grano del compositor no agrega tiempo medible (2,67 s contra 2,78 s en el mismo fotograma).
 - Todas las mediciones son de una sola corrida; repetir antes de sacar conclusiones.
 

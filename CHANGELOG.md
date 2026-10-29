@@ -21,6 +21,10 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
+### Agregado (render del 002)
+- `media/002-columnas-esferas.mp4`: render de la versión actual con el sonido elegido, bucle x3 (12,5 s).
+  0,68 s/fotograma, pico de VRAM 2691 MiB, bucle cerrado (cierre 2,08 dentro del rango consecutivo 1,86 a 2,38).
+
 ### Agregado (sonido, propuesta provisional)
 - `experimentos/002-columnas-cenital/sonido/`: audio sincronizado con los picos reales de las columnas.
   v1 (ticks + zumbido) y v2 (caja de música mecánica, pentatónica mayor y menor), con verificador objetivo.
@@ -37,7 +41,6 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `make_001.py` fija luces y mundo en valores absolutos: la receta reproduce el `.blend` publicado.
 
 ### Pendiente
-- Render de la versión actual del 002 (el video de `media/` es de la versión cenital anterior).
 - Definir la estética final de los experimentos 001 y 002 con el autor.
 - Experimento de Grease Pencil (dibujo del autor).
 
