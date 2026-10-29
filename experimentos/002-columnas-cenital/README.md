@@ -122,7 +122,7 @@ material, no en los nodos de geometría.
 - Un solo nodo de entrada con 11 parámetros cruzaba el lienzo con cables largos e ilegibles; se repartió uno por marco.
 
 ## Sonido
-**Elegida por el autor: la caja de música en pentatónica menor** (`sonido_002_v2b_pentatonica-menor.wav`). La mayor (v2a) y los ticks de la v1 se conservan como alternativas. El resto sigue siendo provisional hasta oírla junto al video.
+**Elegida por el autor: la v4, campanas y oleaje** (`sonido_002_v4_campanas-y-olas.wav`): la caja de música en pentatónica menor tocada por las esferas campana, con el oleaje que viaja a la velocidad de la cresta. Es el sonido del preview `media/002-columnas-camara-d.mp4`. Se conservan como alternativas la v1 (ticks), la v2 (caja de música mayor y menor, esferas al azar) y la v3 (oleaje de 3 anillos); la caja de música menor ya había sido elegida en la v2, y se mantiene.
 
 Todo está en `sonido/`. El sonido se sintetiza con código (numpy/scipy), sin muestras de terceros, y los eventos
 salen de los datos reales del `.blend`: el instante en que cada columna llega a su pico (el mismo en que se

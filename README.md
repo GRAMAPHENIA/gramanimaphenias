@@ -50,5 +50,6 @@ Medición de referencia (experimento 000, cubo, EEVEE 64 muestras, 1080x1920, 24
 Compositor base (Blender 5.2: grupo en `scene.compositing_node_group`): glare Bloom + viñeta + grano de película (ruido blanco 4D).
 Encuadre ajustado: el cubo entra completo en el salto (cámara en (0,-13,3.2)).
 
-Próximo paso: estética definida por el autor para el 002 (hay render con sonido en `media/`); después, un experimento
+Experimento 002: el autor eligió la cámara D y el sonido v4 (campanas y oleaje); preview en `media/002-columnas-camara-d.mp4`.
+Próximo paso: estética final (paleta y ritmo) del 002 si el autor quiere cambiarla; después, un experimento
 de Grease Pencil con dibujo del autor.
