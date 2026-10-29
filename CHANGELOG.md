@@ -21,6 +21,12 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
+### Agregado (sonido, propuesta provisional)
+- `experimentos/002-columnas-cenital/sonido/`: audio sincronizado con los picos reales de las columnas.
+  v1 (ticks + zumbido) y v2 (caja de música mecánica, pentatónica mayor y menor), con verificador objetivo.
+  Bucle de 100 fotogramas = 200 000 muestras exactas. Pendiente que el autor elija y escuche.
+- Git LFS también para `*.wav`.
+
 ### Cambiado
 - Escena base: luces más fuertes, suelo de 200 m, mundo más oscuro y viñeta más suave
   para que el horizonte no sea un borde duro.

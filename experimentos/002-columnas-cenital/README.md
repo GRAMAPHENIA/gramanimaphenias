@@ -114,6 +114,41 @@ material, no en los nodos de geometría.
   estaban en 0 hasta reasignar el grupo.
 - Un solo nodo de entrada con 11 parámetros cruzaba el lienzo con cables largos e ilegibles; se repartió uno por marco.
 
+## Sonido (propuesta provisional)
+Todo está en `sonido/`. El sonido se sintetiza con código (numpy/scipy), sin muestras de terceros, y los eventos
+salen de los datos reales del `.blend`: el instante en que cada columna llega a su pico (el mismo en que se
+desprende su esfera). El carácter del sonido, la escala y el registro son decisiones del autor.
+
+| Archivo | Qué es |
+| --- | --- |
+| `extraer_eventos.py` | Lee el `.blend` (solo lectura) y guarda `eventos_002.json`: 608 picos con su instante sub-fotograma |
+| `sintetizar_002.py` → `sonido_002_v1.wav` | v1: un tick mecánico por pico + zumbido de motor. A 146 clics por segundo se funden en una textura continua |
+| `sintetizar_002_caja.py` → `sonido_002_v2a_pentatonica-mayor.wav`, `sonido_002_v2b_pentatonica-menor.wav` | v2: caja de música mecánica. Lengüeta de peine (parciales 1, 6,27 y 17,55) + zumbido muy bajo |
+| `verificar_audio.py` | Comprobaciones objetivas (no sustituyen escucharlo) |
+
+**v2:** el tono depende de la posición Y de la columna (escala pentatónica de 3 octavas desde do5); los picos se
+agrupan en tramos de 4 fotogramas, los tramos con pocos picos quedan en silencio y los de mucha actividad tocan
+hasta 2 notas. 28 notas en 4,17 s (6,7 por segundo, 13 tonos distintos, silencio más largo de 0,46 s). Parámetros al
+inicio de `sintetizar_002_caja.py`: `MAPEO` (`y`, `distancia`, `angulo`), `RANURA`, `MAX_NOTAS`, escala, `RAIZ_MIDI`.
+
+El audio dura exactamente lo mismo que la animación (200 000 muestras a 48 kHz = 100 fotogramas a 24 fps) y cierra
+el bucle: se sintetizan tres vueltas y se toma la del medio. Regenerar:
+```powershell
+$bl = "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+$e = "experimentos\002-columnas-cenital"
+$s = "$e\sonido"
+& $bl -b $e\002.blend -P $s\extraer_eventos.py -- $s\eventos_002.json
+python $s\sintetizar_002_caja.py $s\eventos_002.json $s\sonido_002_v2a_pentatonica-mayor.wav mayor
+python $s\verificar_audio.py $s\eventos_002.json $s\sonido_002_v2a_pentatonica-mayor.wav $s\sonido_002_v2a_pentatonica-mayor.wav.notas.json
+```
+
+**Comprobado (v2a / v2b):** duración exacta, pico −3,0 dBFS sin recortes, RMS −16,9 / −17,2 dBFS, empalme del bucle
+dentro del rango normal de saltos, y el tono medido de la nota coincide con el esperado: 26 de 28 y 25 de 28 notas suben
+más de 6 dB en su frecuencia (las que no, repiten un tono que aún suena de una nota anterior). **No comprobado:** cómo
+suena. Los ataques de las notas destacan poco sobre las colas de las anteriores (mediana ×1,3 a ×1,4 en agudos): las
+notas se solapan y puede sonar a "velo"; si es así, acortar la caída (`tau` en `lengueta()`).
+Pendiente: que el autor la escuche, elija escala y mezcla con el video (`encode.ps1` aún no acepta audio).
+
 ## Medición
 No hay medición de la versión actual (con esferas). La de la versión cenital anterior (608 columnas, 144
 fotogramas): 2,04 s/fotograma, pico de VRAM 1596 MiB en toda la GPU, con la GPU a unos 77 °C al empezar
