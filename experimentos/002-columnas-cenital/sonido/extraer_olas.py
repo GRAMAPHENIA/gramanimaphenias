@@ -2,12 +2,13 @@
 
 Por fotograma, a partir de las alturas reales de las columnas (el bucle se trata como circular):
   - global:     altura media de todas las columnas.
-  - anillos:    altura media por distancia al centro de la onda (interior / medio / exterior).
+  - anillos:    altura media por distancia al centro de la onda, en N_ANILLOS anillos finos (0 = centro).
+                La cresta los recorre de dentro hacia afuera: de ahí sale el barrido del oleaje.
   - cuadrantes: altura media por ángulo alrededor del centro (4 sectores). No dependen de la cámara.
   - subida:     columnas que están subiendo vs bajando (balance), y velocidad media de subida.
 
 Uso (solo lectura sobre el archivo):
-  blender -b experimentos/002-columnas-cenital/002.blend -P experimentos/002-columnas-cenital/sonido/extraer_olas.py -- olas.json
+  blender -b experimentos/002-columnas-cenital/002.blend -P experimentos/002-columnas-cenital/sonido/extraer_olas.py -- olas.json [n_anillos]      (por defecto 8; la v3 usó 3 -> olas_002.json)
 """
 import sys
 import json
@@ -19,6 +20,7 @@ sc = bpy.context.scene
 f0, f1 = sc.frame_start, sc.frame_end
 n = f1 - f0 + 1
 ANCHO = 0.34
+N_ANILLOS = int(sys.argv[sys.argv.index("--") + 2]) if len(sys.argv) > sys.argv.index("--") + 2 else 8   # la v3 usó 3
 CENTRO = (0.0, 0.5)
 
 
@@ -41,7 +43,7 @@ claves = sorted(serie[0])
 dist = {k: math.hypot(k[0] - CENTRO[0], k[1] - CENTRO[1]) for k in claves}
 ang = {k: (math.atan2(k[1] - CENTRO[1], k[0] - CENTRO[0]) + math.pi) / (2 * math.pi) for k in claves}
 dmax = max(dist.values())
-anillo = {k: min(2, int(dist[k] / dmax * 3)) for k in claves}
+anillo = {k: min(N_ANILLOS - 1, int(dist[k] / dmax * N_ANILLOS)) for k in claves}
 cuadrante = {k: min(3, int(ang[k] * 4)) for k in claves}
 
 
@@ -50,9 +52,9 @@ def media(sel, i):
     return sum(v) / len(v)
 
 
-salida_d = {"fps": sc.render.fps, "fotogramas": n}
+salida_d = {"fps": sc.render.fps, "fotogramas": n, "n_anillos": N_ANILLOS, "dist_max": round(dmax, 4)}
 salida_d["global"] = [round(media(claves, i), 5) for i in range(n)]
-for a in range(3):
+for a in range(N_ANILLOS):
     sel = [k for k in claves if anillo[k] == a]
     salida_d["anillo%d" % a] = [round(media(sel, i), 5) for i in range(n)]
 for q in range(4):

@@ -155,8 +155,14 @@ if esfera:
     wc, hc = bloque(c, [E("Crece al nacer", "Se encoge al morir"), E("1 − encogimiento"), E("Tamaño (0 a 1)"),
                         E("× Diámetro"), E("Escala (d, d, d)")], xs, ys2)
     e = marco("Marco 9e", "Esfera e instancias", f9)
-    bloque(e, [E("Esfera", "Suavizar", "Material de columna (el mismo)"), E("Esfera en cada punto"),
-               E("Subir"), E("Guardar h (color base)", "Guardar g (destello)")], xs + wc + GAP_MARCOS, ys2)
+    we, he = bloque(e, [E("Esfera", "Suavizar", "Material de columna (el mismo)"), E("Esfera en cada punto"),
+                        E("Subir"), E("Guardar h (color base)", "Guardar g (destello)")], xs + wc + GAP_MARCOS, ys2)
+    # fila 3: las campanas (si campanas.py ya se ejecutó)
+    if "C_flag" in N:
+        k = marco("Marco 9f", "Campanas: esferas que suenan", f9)
+        bloque(k, [E("C_ix_a", "C_iy_a"), E("C_ix_b", "C_iy_b"), E("C_ix", "C_iy"), E("C_ix_m", "C_iy_m"), E("C_fx", "C_fy"),
+                   E("C_flag"), E("C_t1", "C_b1"), E("C_t2", "C_b2"), E("C_tam", "C_bri"), E("C_diam", "C_g")],
+               xs, ys2 - max(hc, he) - GAP_MARCOS)
 
 for n in N:
     n.select = False

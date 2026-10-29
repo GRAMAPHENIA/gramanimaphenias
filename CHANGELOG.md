@@ -21,6 +21,18 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `docs/02-render-4gb.md`: ajustes para 4 GB de VRAM y tabla de mediciones.
 - Convención de commits documentada en el README.
 
+### Agregado (campanas y sonido v4)
+- `experimentos/002-columnas-cenital/campanas.py`: esferas campana (una de cada N columnas, más grandes y brillantes), las
+  únicas que suenan. 3 parámetros nuevos en el modificador (separación, tamaño y brillo). Con tamaño 1 y brillo 1 el
+  resultado es idéntico al anterior; con 1,8 las campanas miden exactamente x1,800 y las demás x1,000.
+- `sonido/sintetizar_002_v4.py` (+ `verificar_v4.py`, `olas_002_8anillos.json`): una nota por campana y oleaje de 8 bandas que
+  viaja a la velocidad de la cresta (audio 0,81 m/s, movimiento 0,81 m/s). Propuesta provisional, pendiente de escucha.
+- `extraer_olas.py` acepta el número de anillos (8 por defecto; la v3 usó 3, y sigue reproduciéndose igual).
+- La receta de Blender (con `campanas.py` en la cadena) se verificó: reproduce la sesión del autor con diferencia 0,0.
+
+### Corregido
+- Sonido v4: el ruido de las capas de oleaje ahora es periódico (duraba más que la vuelta y el bucle hacía un clic).
+
 ### Agregado (sonido v3 y encuadre)
 - `sonido/sintetizar_002_olas.py` (+ `extraer_olas.py`, `verificar_olas.py`): esferas = caja de música, torres = oleaje
   seguido de la altura real de los anillos. Propuesta provisional, pendiente de escucha.

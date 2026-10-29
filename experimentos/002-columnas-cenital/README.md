@@ -30,7 +30,7 @@ $bl = "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
 $e = "experimentos\002-columnas-cenital"
 & $bl -b --factory-startup -P scripts\setup_scene.py -- base\gramaphenia-base.blend
 & $bl -b base\gramaphenia-base.blend `
-  -P $e\make_002.py -P $e\anadir_esferas.py -P $e\exponer_parametros.py `
+  -P $e\make_002.py -P $e\anadir_esferas.py -P $e\exponer_parametros.py -P $e\campanas.py `
   -P $e\ordenar_nodos.py -P $e\distribuir_entradas.py -P $e\ordenar_nodos.py `
   --python-expr "import bpy; bpy.ops.wm.save_as_mainfile(filepath=r'$e\002.blend')" -- "$e\002.blend"
 .\scripts\render.ps1 -Blend $e\002.blend -Start 1 -End 100 -Out renders\002\f_
@@ -46,6 +46,7 @@ aproximados; para el orden final, ejecutarlo con el archivo abierto en Blender:
 | `make_002.py` | Escena: columnas, material, sol sin sombras, cámara, grafo de la onda y el destello |
 | `anadir_esferas.py` | Agrega las esferas (marco 9). Parámetros `LIFE`, `RISE`, `DIAM`, `NACE`, `APAGA` al inicio |
 | `exponer_parametros.py` | Expone 11 parámetros en el panel del modificador |
+| `campanas.py` | Las esferas "campana" (una de cada N columnas): más grandes, más brillantes y las únicas que suenan. 3 parámetros más |
 | `distribuir_entradas.py` | Un nodo de entrada por marco, para que los cables sean cortos |
 | `ordenar_nodos.py` | Marcos en color por defecto, títulos en mayúsculas, cuadrícula con tamaños reales |
 
@@ -82,6 +83,9 @@ Aparecen en el panel del modificador "Columnas_cenital", sin abrir Geometry Node
 | Esferas | Altura de ascenso | 2,5 m |
 | Esferas | Diámetro de esfera | 0,26 m |
 | Esferas | Inicio del encogimiento | 0,15 |
+| Campanas | Separación de campanas | 4 (cada 4 columnas, en filas y columnas: 5 x 8 = 40 campanas) |
+| Campanas | Tamaño de campana | x1,8 |
+| Campanas | Brillo de campana | x1,8 |
 
 **Si se cambia "Frames por ciclo", hay que cambiar también el rango de la animación** al mismo valor para
 que el bucle cierre (probado: con 50, el fotograma 1 y el 51 son idénticos).
@@ -179,11 +183,45 @@ por debajo. `NOTAS_FACTOR` y las ganancias de `CAPAS` son los mandos. **No compr
 La primera verificación dio "NO" por mi culpa: comparaba con "el anillo de al lado", pero los anillos oscilan desfasados
 entre sí y están muy correlacionados; el control correcto es la señal de su propio anillo desplazada.
 
+### v4: campanas sincronizadas con la caja de música + oleaje que viaja a la velocidad de la ola
+Pedido del autor sobre la v3 (la música "sonaba bien"): que el oleaje tenga la misma velocidad que el movimiento y que las
+esferas estén sincronizadas con la caja de música. Antes sonaban 28 notas elegidas al azar entre 608 esferas, sin forma de
+saber cuál era "la que suena". Ahora:
+
+- **Campanas** (`campanas.py`): una esfera de cada N columnas es más grande y más brillante, y solo ella toca una nota, en el
+  instante en que nace. La regla usa solo posiciones (ix e iy múltiplos de N), sin azar, así que el audio la reproduce
+  exactamente. 40 campanas = 40 notas, 14 tonos distintos (tono: 70 % altura Y + 30 % X; la altura sola daría 8).
+- **Oleaje que viaja** (`sintetizar_002_v4.py`): 8 anillos finos (0,95 m) en vez de 3, cada uno una banda de ruido de 140 Hz
+  (centro) a 5,5 kHz (borde), con el volumen de la altura real de su anillo. La cresta recorre las bandas, y el oído sigue
+  un barrido de grave a agudo que sale del centro. Con anillos finos la variación de cada señal sube de 13-28 % a 42-52 %.
+- La mezcla se calcula: el oleaje queda `OLAS_DB` = -6 dB bajo las notas (RMS de banda ancha).
+
+**Comprobado** (`verificar_v4.py`, `verificar_audio.py`): 40 notas coinciden con las 40 columnas campana en instante (1 ms) y
+posición, y ninguna suena sobre una columna que no sea campana; cada banda sola sigue su anillo con r = 0,92 a 0,97
+(control ~0); **velocidad de la cresta: 0,81 m/s en el audio, 0,81 en el movimiento, 0,77 teórica** (longitud de onda 3,2 m /
+periodo 4,17 s); duración exacta, pico -3,0 dBFS sin recortes. **No comprobado:** cómo suena.
+Error propio corregido: las capas de ruido no eran periódicas y el bucle tenía un clic (salto de empalme 0,146, mayor que el
+de cualquier par de muestras vecinas); el ruido de base dura ahora exactamente una vuelta y se repite, y el salto baja a
+0,014 (normal). La v3, ya publicada, conserva ese defecto leve (su salto de 0,008 pasó el criterio).
+
+Regenerar (los datos de 8 anillos salen con `extraer_olas.py ... 8`; la v3 usó 3 anillos y `olas_002.json`):
+```powershell
+$bl = "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+$e = "experimentos\002-columnas-cenital"
+$s = "$e\sonido"
+& $bl -b $e\002.blend -P $s\extraer_olas.py -- $s\olas_002_8anillos.json 8
+python $s\sintetizar_002_v4.py $s\eventos_002.json $s\olas_002_8anillos.json $s\sonido_002_v4_campanas-y-olas.wav 4
+python $s\verificar_v4.py $s\eventos_002.json $s\olas_002_8anillos.json $s\sonido_002_v4_campanas-y-olas.wav 4
+```
+La separación (4) debe coincidir con "Separación de campanas" del modificador.
+
 ### Encuadre de la cámara
 Con la cámara del autor (diagonal, 35 mm) la escena ocupa el 95 % del ancho y solo el 44 % del alto del cuadro vertical:
 **el límite es el ancho, no la distancia**, así que acercar la cámara corta los lados. La grilla mide 7,2 x 12,4 m y desde
 ese ángulo el lado largo se proyecta a lo ancho. Para llenar el cuadro hay que girar la cámara hacia el eje largo y/o
-subirla. Cámaras de propuesta (colección "Propuestas de cámara" en el `.blend` del autor, la activa no se cambió), con la
+subirla. Para cambiar de cámara sin Numpad: menú View > Cameras > Set Active Object as Camera (con la cámara seleccionada), o el
+campo "Camera" de Propiedades > Escena, o activar Emulate Numpad en las preferencias (Ctrl+0).
+Cámaras de propuesta (colección "Propuestas de cámara" en el `.blend` del autor, la activa no se cambió), con la
 escena entera, esferas incluidas, dentro de un margen del 5 %:
 
 | Opción | Acimut / elevación | Distancia | Llena (ancho x alto) |
