@@ -25,6 +25,8 @@ El proyecto usa versionado por hitos (`0.x`) mientras el kit se estabiliza.
 - `experimentos/002-columnas-cenital/sonido/`: audio sincronizado con los picos reales de las columnas.
   v1 (ticks + zumbido) y v2 (caja de música mecánica, pentatónica mayor y menor), con verificador objetivo.
   Bucle de 100 fotogramas = 200 000 muestras exactas. Pendiente que el autor elija y escuche.
+- Elegida por el autor: caja de música en pentatónica menor (`sonido_002_v2b_pentatonica-menor.wav`).
+- `scripts/encode.ps1`: opciones `-Audio` (mezcla una pista en el mp4) y `-Repetir` (repite el bucle).
 - Git LFS también para `*.wav`.
 
 ### Cambiado

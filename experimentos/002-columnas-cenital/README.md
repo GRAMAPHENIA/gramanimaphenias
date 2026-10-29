@@ -114,7 +114,9 @@ material, no en los nodos de geometría.
   estaban en 0 hasta reasignar el grupo.
 - Un solo nodo de entrada con 11 parámetros cruzaba el lienzo con cables largos e ilegibles; se repartió uno por marco.
 
-## Sonido (propuesta provisional)
+## Sonido
+**Elegida por el autor: la caja de música en pentatónica menor** (`sonido_002_v2b_pentatonica-menor.wav`). La mayor (v2a) y los ticks de la v1 se conservan como alternativas. El resto sigue siendo provisional hasta oírla junto al video.
+
 Todo está en `sonido/`. El sonido se sintetiza con código (numpy/scipy), sin muestras de terceros, y los eventos
 salen de los datos reales del `.blend`: el instante en que cada columna llega a su pico (el mismo en que se
 desprende su esfera). El carácter del sonido, la escala y el registro son decisiones del autor.
@@ -147,7 +149,12 @@ dentro del rango normal de saltos, y el tono medido de la nota coincide con el e
 más de 6 dB en su frecuencia (las que no, repiten un tono que aún suena de una nota anterior). **No comprobado:** cómo
 suena. Los ataques de las notas destacan poco sobre las colas de las anteriores (mediana ×1,3 a ×1,4 en agudos): las
 notas se solapan y puede sonar a "velo"; si es así, acortar la caída (`tau` en `lengueta()`).
-Pendiente: que el autor la escuche, elija escala y mezcla con el video (`encode.ps1` aún no acepta audio).
+Mezcla con el video: `scripts/encode.ps1` acepta `-Audio` y `-Repetir` (probado con 100 fotogramas: video y audio duran lo mismo, 4,1667 s; con `-Repetir 3`, 12,5 s y 300 fotogramas).
+```powershell
+.\scripts\encode.ps1 -Pattern renders\002\f_%04d.png -Out renders\002\columnas.mp4 `
+  -Audio experimentos\002-columnas-cenital\sonido\sonido_002_v2b_pentatonica-menor.wav -Repetir 3
+```
+Pendiente: renderizar la versión actual y oírla junto a la imagen.
 
 ## Medición
 No hay medición de la versión actual (con esferas). La de la versión cenital anterior (608 columnas, 144
